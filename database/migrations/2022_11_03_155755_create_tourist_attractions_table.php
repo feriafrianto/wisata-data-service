@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('tourist_attractions', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->string('image');
+            $table->longText('imagebinary');
             $table->timestamps();
         });
     }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\TouristAttractionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::resource('tourist_attractions', TouristAttractionController::class);
+Route::get('/', [TouristAttractionController::class,'predict'])->name('predict.index');
+Route::post('predict-process', [TouristAttractionController::class,'predictProcess'])->name('predict.process');
