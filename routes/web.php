@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TouristAttractionController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,3 +20,5 @@ use App\Http\Controllers\TouristAttractionController;
 Route::resource('tourist_attractions', TouristAttractionController::class);
 Route::get('/', [TouristAttractionController::class,'predict'])->name('predict.index');
 Route::post('predict-process', [TouristAttractionController::class,'predictProcess'])->name('predict.process');
+
+Route::get('admin', [AdminController::class,'index'])->name('admin.index');

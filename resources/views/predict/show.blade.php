@@ -6,12 +6,6 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>Predict Image</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
-    <!-- Favicons -->
-    <!-- <link href="{{ URL::to('/') }}/assets/img/favicon.png" rel="icon"> -->
-    <link href="{{ URL::to('/') }}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -80,27 +74,6 @@
                         </li>
                         <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-5.jpg">
                             <img src="http://sachinchoolur.github.io/lightslider/img/cS-5.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-6.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-6.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-7.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-7.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-8.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-8.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-9.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-9.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-10.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-10.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-11.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-12.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-13.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-13.jpg" />
                         </li>
                     </ul>
                 </div>
