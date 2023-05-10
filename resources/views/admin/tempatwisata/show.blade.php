@@ -22,7 +22,7 @@
 
     <!-- Custom styles for this page -->
     <link href="{{ URL::to('/') }}/assets/sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
 </head>
 
 <body id="page-top">
@@ -142,59 +142,78 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Tempat Wisata</h1>
-                        <a href="{{ route('tourist_attractions.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-plus fa-sm text-white-50"></i> Tambah Data</a>
                     </div>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Daerah</th>
-                                            <th>Gambar</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($touristattractions as $touristattraction)
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $touristattraction->name }}</td>
-                                            <td>{{ $touristattraction->short_address }}</td>
-                                            <td>
-                                                <img src="{{ $touristattraction->tourismimages[0]->image_link }}" class="rounded" height="100px">
-                                            </td>
-                                            <td class="text-center">
-                                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                    action="{{ route('tourist_attractions.destroy', $touristattraction->id) }}" method="POST">
-                                                    <a href="{{ route('tourist_attractions.show', $touristattraction->id) }}"
-                                                        class="btn btn-info rounded-pill">
-                                                        <i class="fas fa-pencil"></i>
-                                                        View</a>
-                                                    <a href="{{ route('tourist_attractions.edit', $touristattraction->id) }}"
-                                                        class="btn btn-primary rounded-pill">
-                                                        <i class="fas fa-pencil"></i>
-                                                        Edit</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger rounded-pill">
-                                                        Hapus
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td class="text-center" colspan="5">Data tempat wisata tidak tersedia</td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><span class="font-weight-bold">Nama</span></p>
+                                </div>
+                                <div class="col-9">
+                                    <p>: {{ $touristAttraction->name }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><span class="font-weight-bold">Lokasi</span></p>
+                                </div>
+                                <div class="col-9">
+                                    <p>: {{ $touristAttraction->short_address }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><span class="font-weight-bold">Alamat</span></p>
+                                </div>
+                                <div class="col-9">
+                                    <p>: {{ $touristAttraction->address }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><span class="font-weight-bold">Jam Operasional</span></p>
+                                </div>
+                                <div class="col-9">
+                                    <p>: {{ $touristAttraction->operational_hour }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><span class="font-weight-bold">Harga Tiket</span></p>
+                                </div>
+                                <div class="col-9">
+                                    <p>: {{ $touristAttraction->ticket_price }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <p><span class="font-weight-bold">Kontak</span></p>
+                                </div>
+                                <div class="col-9">
+                                    <p>: {{ $touristAttraction->contact }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p><span class="font-weight-bold"> Deskripsi</span></p>
+                                    {{ $touristAttraction->description }}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <iframe class="embed-responsive-item" src="https://maps.google.com/maps?q={{ $touristAttraction->latitude }},{{ $touristAttraction->longtitude }}&hl=es;z=14&amp;output=embed" width="100%" height="350px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                </div>
+                            </div>
+                            <div class="row photos">
+                                @foreach($touristAttraction->tourismimages as $image)
+                                    <div class="col-sm-6 col-md-4 col-lg-3 item">
+                                        <a href="{{ $image->image_link }}" data-lightbox="photos"><img class="img-fluid" src="{{ $image->image_link }}"></a>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -261,7 +280,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ URL::to('/') }}/assets/sb-admin-2/js/demo/datatables-demo.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
 </body>
 
 </html>

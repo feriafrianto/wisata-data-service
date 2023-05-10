@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TouristAttraction extends Model
+class TourismImage extends Model
 {
     use HasFactory;
     protected $guarded = [];
 
-    public function tourismimages()
+    public function touristattraction()
     {
-        return $this->hasMany(TourismImage::class);
+        return $this->belongsTo(TouristAttraction::class);
     }
 }

@@ -16,9 +16,15 @@ return new class extends Migration
         Schema::create('tourist_attractions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->string('image');
+            $table->text('description')->nullable();
             $table->longText('imagebinary');
+            $table->string('operational_hour')->nullable();
+            $table->string('short_address')->nullable();
+            $table->string('address')->nullable();
+            $table->string('ticket_price')->nullable();
+            $table->string('contact')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longtitude')->nullable();
             $table->timestamps();
         });
     }

@@ -134,70 +134,66 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    @if (session('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
-                    @endif
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Tempat Wisata</h1>
-                        <a href="{{ route('tourist_attractions.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-plus fa-sm text-white-50"></i> Tambah Data</a>
+                        <h1 class="h3 mb-0 text-gray-800">Tambah Tempat Wisata</h1>
                     </div>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Daerah</th>
-                                            <th>Gambar</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($touristattractions as $touristattraction)
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $touristattraction->name }}</td>
-                                            <td>{{ $touristattraction->short_address }}</td>
-                                            <td>
-                                                <img src="{{ $touristattraction->tourismimages[0]->image_link }}" class="rounded" height="100px">
-                                            </td>
-                                            <td class="text-center">
-                                                <form onsubmit="return confirm('Apakah Anda Yakin ?');"
-                                                    action="{{ route('tourist_attractions.destroy', $touristattraction->id) }}" method="POST">
-                                                    <a href="{{ route('tourist_attractions.show', $touristattraction->id) }}"
-                                                        class="btn btn-info rounded-pill">
-                                                        <i class="fas fa-pencil"></i>
-                                                        View</a>
-                                                    <a href="{{ route('tourist_attractions.edit', $touristattraction->id) }}"
-                                                        class="btn btn-primary rounded-pill">
-                                                        <i class="fas fa-pencil"></i>
-                                                        Edit</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger rounded-pill">
-                                                        Hapus
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @empty
-                                        <tr>
-                                            <td class="text-center" colspan="5">Data tempat wisata tidak tersedia</td>
-                                        </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                    <form action="{{ route('tourist_attractions.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="name">Nama</label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Candi Borobudur" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Deskripsi</label>
+                                    <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="operational_hour">Jam Operasional</label>
+                                    <input class="form-control" id="operational_hour" type="text" name="operational_hour" placeholder="Pukul 09:00 - 19:00 WIB">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ticket_price">Harga Tiket</label>
+                                    <input class="form-control" id="ticket_price" name="ticket_price" type="text" placeholder="10.000">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contact">Kontak</label>
+                                    <input class="form-control" id="contact" name="contact" type="text" placeholder="+6285 853 789 746">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="short_address">Daerah</label>
+                                    <input class="form-control" id="short_address" name="short_address" type="text" placeholder="Magelang, Jawa Tengah">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Alamat Lengkap</label>
+                                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="latitude">Latitude</label>
+                                    <input class="form-control" id="latitude" name="latitude" type="text" placeholder="+6285 853 789 746">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="longtitude">Longtitude</label>
+                                    <input class="form-control" id="longtitude" name="longtitude" type="text" placeholder="+6285 853 789 746">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1">Image</label>
+                                    <div class="images-preview-div"> </div>
+                                    <input class="form-control mt-1" type="file" name="images[]" id="images" placeholder="Choose images" multiple >
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -261,7 +257,30 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ URL::to('/') }}/assets/sb-admin-2/js/demo/datatables-demo.js"></script>
-
+    <script >
+    $(function() {
+        // Multiple images preview with JavaScript
+        var previewImages = function(input, imgPreviewPlaceholder) {
+            if (input.files) {
+                var filesAmount = input.files.length;
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        $($.parseHTML('<img>'))
+                        .attr('src', event.target.result)
+                        .attr('height', '80px')
+                        .attr('class', 'mr-2')
+                        .appendTo(imgPreviewPlaceholder);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+        };
+        $('#images').on('change', function() {
+            previewImages(this, 'div.images-preview-div');
+        });
+    });
+    </script>
 </body>
 
 </html>
