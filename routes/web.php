@@ -20,5 +20,6 @@ use App\Http\Controllers\AdminController;
 Route::resource('tourist_attractions', TouristAttractionController::class);
 Route::get('/', [TouristAttractionController::class,'predict'])->name('predict.index');
 Route::post('predict-process', [TouristAttractionController::class,'predictProcess'])->name('predict.process');
+Route::get('predict-show/{tourist_attraction}', [TouristAttractionController::class,'predictShow'])->name('predict.show');
 
 Route::get('admin', [AdminController::class,'index'])->name('admin.index');

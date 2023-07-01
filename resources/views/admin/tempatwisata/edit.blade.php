@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Dashboard</title>
+    <title>Edit Data</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ URL::to('/') }}/assets/sb-admin-2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,6 +19,9 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ URL::to('/') }}/assets/sb-admin-2/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="{{ URL::to('/') }}/assets/sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -131,112 +134,70 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Edit Tempat Wisata</h1>
                     </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Jumlah Tempat Wisata</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
+                    <form action="{{ route('tourist_attractions.update',$touristAttraction->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="name">Nama</label>
+                                    <input class="form-control" id="name" name="name" type="text" placeholder="Candi Borobudur" value="{{ $touristAttraction->name }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Deskripsi</label>
+                                    <textarea class="form-control" id="description" name="description" rows="4">{{ $touristAttraction->description }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="operational_hour">Jam Operasional</label>
+                                    <input class="form-control" value="{{ $touristAttraction->operational_hour }}" type="text" name="operational_hour" placeholder="Pukul 09:00 - 19:00 WIB">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ticket_price">Harga Tiket</label>
+                                    <input class="form-control" id="ticket_price" value="{{ $touristAttraction->ticket_price }}" name="ticket_price" type="text" placeholder="10.000">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contact">Kontak</label>
+                                    <input class="form-control" id="contact" value="{{ $touristAttraction->contact }}"  name="contact" type="text" placeholder="+6285 853 789 746">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="short_address">Daerah</label>
+                                    <input class="form-control" id="short_address" value="{{ $touristAttraction->short_address }}" name="short_address" type="text" placeholder="Magelang, Jawa Tengah">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Alamat Lengkap</label>
+                                    <textarea class="form-control" name="address" rows="3">{{ $touristAttraction->address }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="latitude">Latitude</label>
+                                    <input class="form-control" value="{{ $touristAttraction->latitude }}" name="latitude" type="text" placeholder="-7.816050">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="longtitude">Longtitude</label>
+                                    <input class="form-control" value="{{ $touristAttraction->longtitude }}" name="longtitude" type="text" placeholder="112.062851">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1">Image</label>
+                                    <input class="form-control" type="file" name="images[]" id="images" placeholder="Choose images" multiple >
+                                    <div class="images-preview-div mt-1">
+                                        @foreach($touristAttraction->tourismimages as $image)
+                                            <img src="{{ $image->image_link }}" height="80px"></img>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Jumlah Prediksi</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
                             </div>
                         </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Penyebaran Lokasi Wisata</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    </form>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -296,12 +257,35 @@
     <script src="{{ URL::to('/') }}/assets/sb-admin-2/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="{{ URL::to('/') }}/assets/sb-admin-2/vendor/chart.js/Chart.min.js"></script>
+    <script src="{{ URL::to('/') }}/assets/sb-admin-2/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{ URL::to('/') }}/assets/sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{{ URL::to('/') }}/assets/sb-admin-2/js/demo/chart-area-demo.js"></script>
-    <script src="{{ URL::to('/') }}/assets/sb-admin-2/js/demo/chart-pie-demo.js"></script>
-
+    <script src="{{ URL::to('/') }}/assets/sb-admin-2/js/demo/datatables-demo.js"></script>
+    <script >
+    $(function() {
+        // Multiple images preview with JavaScript
+        var previewImages = function(input, imgPreviewPlaceholder) {
+            if (input.files) {
+                var filesAmount = input.files.length;
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        $($.parseHTML('<img>'))
+                        .attr('src', event.target.result)
+                        .attr('height', '80px')
+                        .attr('class', 'mr-2')
+                        .appendTo(imgPreviewPlaceholder);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+        };
+        $('#images').on('change', function() {
+            previewImages(this, 'div.images-preview-div');
+        });
+    });
+    </script>
 </body>
 
 </html>

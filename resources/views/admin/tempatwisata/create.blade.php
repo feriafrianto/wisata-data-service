@@ -100,9 +100,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Feri Afrianto</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="{{ URL::to('/') }}/assets/sb-admin-2/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -174,11 +174,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="latitude">Latitude</label>
-                                    <input class="form-control" id="latitude" name="latitude" type="text" placeholder="+6285 853 789 746">
+                                    <input class="form-control" id="latitude" name="latitude" type="text" placeholder="+-7.816050">
                                 </div>
                                 <div class="mb-3">
                                     <label for="longtitude">Longtitude</label>
-                                    <input class="form-control" id="longtitude" name="longtitude" type="text" placeholder="+6285 853 789 746">
+                                    <input class="form-control" id="longtitude" name="longtitude" type="text" placeholder="112.062851">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlInput1">Image</label>

@@ -22,61 +22,55 @@
     <!-- Template Main CSS File -->
     <link href="{{ URL::to('/') }}/assets/css/detail.css" rel="stylesheet">
     <link href="{{ URL::to('/') }}/assets/css/lightslider.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
 </head>
 
 <body>
     <section class="section about-section gray-bg" id="about">
         <div class="container">
-            <div class="row align-items-center flex-row-reverse">
+            <div class="row flex-row-reverse">
                 <div class="col-lg-6">
                     <div class="about-text go-to">
-                        <h3 class="dark-color">{{$result->name ?? 'Nama Tempat Wisata'}}</h3>
-                        <h6 class="theme-color lead">Magelang, Jawa Tengah</h6>
-                        <p>{{$result->description ?? 'Deskripsi'}}</p>
+                        <h3 class="dark-color">{{$touristAttraction->name ?? 'Nama Tempat Wisata'}}</h3>
+                        <h6 class="theme-color lead">{{$touristAttraction->short_address ?? 'Lokasi'}}</h6>
+                        <p>{{$touristAttraction->description ?? 'Deskripsi'}}</p>
                         <div class="row about-list">
                             <div class="col-md-6">
                                 <div class="media">
                                     <label>Jam Operasional</label>
-                                    <p>07:00 sampai 17:00</p>
+                                    <p><p>{{$touristAttraction->operational_hour ?? 'Jam Operasional'}}</p></p>
                                 </div>
                                 <div class="media">
                                     <label>Alamat</label>
-                                    <p>Jl. Badrawati, Borobudur, Magelang, Jawa Tengah</p>
+                                    <p><p>{{$touristAttraction->address ?? 'Alamat'}}</p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="media">
                                     <label>Harga Tiket</label>
-                                    <p>Rp. 10.000-,</p>
+                                    <p>Rp. {{$touristAttraction->ticket_price ?? 'Harga Tiket'}}-,</p>
                                 </div>
                                 <div class="media">
                                     <label>Kontak</label>
-                                    <p>820-885-3321</p>
+                                    <p>{{$touristAttraction->contact ?? 'Kontact'}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                <div class="demo">
-                    <ul id="lightSlider">
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-1.jpg">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Borobudur_Temple.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-2.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-2.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-3.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-3.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-4.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-4.jpg" />
-                        </li>
-                        <li data-thumb="http://sachinchoolur.github.io/lightslider/img/thumb/cS-5.jpg">
-                            <img src="http://sachinchoolur.github.io/lightslider/img/cS-5.jpg" />
-                        </li>
-                    </ul>
-                </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <iframe class="embed-responsive-item" src="https://maps.google.com/maps?q={{ $touristAttraction->latitude }},{{ $touristAttraction->longtitude }}&hl=es;z=14&amp;output=embed" width="100%" height="350px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                    <div class="row photos">
+                        @foreach($touristAttraction->tourismimages as $image)
+                            <div class="col-sm-6 col-md-4 col-lg-3 item">
+                                <a href="{{ $image->image_link }}" data-lightbox="photos"><img class="img-fluid" src="{{ $image->image_link }}"></a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,6 +83,7 @@
     <script src="{{ URL::to('/') }}/assets/vendor/waypoints/noframework.waypoints.js"></script>
     <script src="{{ URL::to('/') }}/assets/vendor/php-email-form/validate.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
 
     <script src="{{ URL::to('/') }}/assets/js/lightslider.js"></script>
     <script type="text/javascript">

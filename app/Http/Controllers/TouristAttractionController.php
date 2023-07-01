@@ -72,8 +72,14 @@ class TouristAttractionController extends Controller
      */
     public function show(TouristAttraction $touristAttraction)
     {
-        return view('admin.tempatwisata.show',compact('touristAttraction'));
+        return response(view('admin.tempatwisata.show',compact('touristAttraction')));
     }
+
+    public function predictShow(TouristAttraction $touristAttraction)
+    {
+        return response(view('predict.show',compact('touristAttraction')));
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -83,7 +89,7 @@ class TouristAttractionController extends Controller
      */
     public function edit(TouristAttraction $touristAttraction)
     {
-        //
+        return response(view('admin.tempatwisata.edit',compact('touristAttraction')));
     }
 
     /**
@@ -95,7 +101,8 @@ class TouristAttractionController extends Controller
      */
     public function update(Request $request, TouristAttraction $touristAttraction)
     {
-        //
+        $touristAttraction->fill($request->post())->save();
+        return redirect()->route('tourist_attractions.index')->withSuccess('Berhasil edit data tempat wisata');
     }
 
     /**
@@ -106,7 +113,9 @@ class TouristAttractionController extends Controller
      */
     public function destroy(TouristAttraction $touristAttraction)
     {
-        //
+        $touristAttraction->tourismimages()->delete();
+        $touristAttraction->delete();
+        return redirect()->route('tourist_attractions.index')->withSuccess('Tempat Wisata berhasil dihapus');
     }
 
     public function predict(){
@@ -125,15 +134,23 @@ class TouristAttractionController extends Controller
         ]);
         $jaraks = $response->json();
         $countries = array_map(function ($id, $jarak) {
+            $attraction = TouristAttraction::with('tourismimages')->find($id);
             return [
                 'id' => $id,
-                'jarak' => $jarak,
+                'name' => $attraction->name,
+                'jarak' => round($jarak[0]*100,2),
+                'image' => $attraction->tourismimages->first()->image_link,
             ];
         }, $ids, $jaraks);
 
-        $sortedData = collect($countries)->sortByDesc('jarak')->values();
-        $result = TouristAttraction::find($sortedData[0]['id']);
-        $rank = $sortedData[0];
-        return view('predict.show',compact('result','rank'));
+        $filteredResults = collect($countries)->sortByDesc('jarak')->values();
+        $results = $filteredResults->take(4);
+        $filteredResults = $results->filter(function ($result) {
+            return $result['jarak'] > 50;
+        });
+        // dd($results);
+        // $result = TouristAttraction::with('tourismimages')->find($sortedData[0]['id']);
+        // $rank = $sortedData[0];
+        return view('predict.result',compact('results'));
     }
 }
